@@ -1,27 +1,28 @@
 # oceaners-hooks
 
-> Most using hooks for our team.
+> Most using hooks for our team. IN DEVELOPMENT
 
-[![NPM](https://img.shields.io/npm/v/oceaners-hooks.svg)](https://www.npmjs.com/package/oceaners-hooks) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/oceaners-hooks.svg)](https://www.npmjs.com/package/oceaners-hooks)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-npm install --save oceaners-hooks
+npm install --save oceaners-hooks@next
 ```
 
 ## Usage
 
 ```tsx
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import MyComponent from 'oceaners-hooks'
-import 'oceaners-hooks/dist/index.css'
+import MyComponent from 'oceaners-hooks';
+import 'oceaners-hooks/dist/index.css';
 
 class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+   render() {
+      return <MyComponent />;
+   }
 }
 ```
 
