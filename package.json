@@ -1,76 +1,112 @@
 {
-  "name": "oceaners-hooks",
-  "version": "1.0.0",
-  "description": "Most using hooks for our team.",
-  "author": "fers4t",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fers4t/oceaners-hooks.git"
-  },
-  "main": "dist/index.js",
-  "module": "dist/index.modern.js",
-  "source": "src/index.tsx",
-  "engines": {
-    "node": ">=16.5.0"
-  },
-  "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
-    "prepare": "run-s build",
-    "test": "run-s test:unit test:lint test:build",
-    "test:build": "run-s build",
-    "test:lint": "eslint .",
-    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
-    "predeploy": "cd example && npm install && npm run build",
-    "deploy": "gh-pages -d example/build"
-  },
-  "peerDependencies": {
-    "react": "^17.0.2"
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.4.1",
-    "@types/node": "^17.0.21",
-    "@types/react": "^17.0.40",
-    "@types/react-dom": "^17.0.13",
-    "@typescript-eslint/eslint-plugin": "^5.14.0",
-    "@typescript-eslint/parser": "^5.14.0",
-    "babel-eslint": "^10.1.0",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.10.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-config-standard-react": "^11.0.1",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-react": "^7.29.3",
-    "eslint-plugin-standard": "^5.0.0",
-    "gh-pages": "^3.2.3",
-    "microbundle-crl": "^0.13.11",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.5.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "^5.0.0",
-    "typescript": "^4.6.2"
-  },
-  "files": [
-    "dist"
-  ],
-  "dependencies": {
-    "use-deep-compare": "^1.1.0"
-  },
-  "bugs": {
-    "url": "https://github.com/fers4t/oceaners-hooks/issues"
-  },
-  "homepage": "https://github.com/fers4t/oceaners-hooks#readme",
-  "directories": {
-    "example": "example"
-  }
+   "name": "oceaners-hooks",
+   "description": "Hooks library for React.",
+   "version": "0.2.1-10",
+   "author": "oceaners-dev",
+   "license": "ISC",
+   "keywords": [],
+   "files": [
+      "dist"
+   ],
+   "main": "dist/cjs/index.js",
+   "module": "dist/esm/index.js",
+   "repository": {
+      "type": "git",
+      "url": ""
+   },
+   "scripts": {
+      "build": "rm -rf ./dist && pnpm run build:esm && pnpm run build:cjs",
+      "build:esm": "tsc",
+      "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
+      "dev": "concurrently \"pnpm build\" \"pnpm storybook\"",
+      "watch": "concurrently \"pnpm watch:esm\" \"pnpm watch:cjs\"",
+      "watch:esm": "tsc --watch",
+      "watch:cjs": "tsc --module CommonJS --outDir dist/cjs --watch",
+      "commit": "cz",
+      "storybook": "start-storybook -p 6006 --quiet",
+      "build-storybook": "build-storybook",
+      "deploy-storybook": "storybook-to-ghpages",
+      "release": "pnpm release-it"
+   },
+   "engines": {
+      "node": ">=14.0.0"
+   },
+   "devDependencies": {
+      "@commitlint/cli": "17.3.0",
+      "@commitlint/config-conventional": "17.3.0",
+      "@ryansonshine/commitizen": "4.2.8",
+      "@ryansonshine/cz-conventional-changelog": "3.3.4",
+      "@types/jest": "29.2.3",
+      "@types/node": "18.11.9",
+      "@types/react": "18.0.25",
+      "@types/react-dom": "18.0.7",
+      "@typescript-eslint/eslint-plugin": "^5.41.0",
+      "@typescript-eslint/parser": "^5.41.0",
+      "autoprefixer": "^10.4.12",
+      "concurrently": "7.4.0",
+      "date-fns": "^2.29.3",
+      "date-fns-tz": "^1.3.7",
+      "eslint": "8.26.0",
+      "eslint-config-airbnb": "19.0.4",
+      "eslint-config-next": "13.0.0",
+      "eslint-config-prettier": "^8.5.0",
+      "eslint-plugin-import": "2.26.0",
+      "eslint-plugin-jsx-a11y": "6.6.1",
+      "eslint-plugin-prettier": "^4.2.1",
+      "eslint-plugin-react": "^7.31.10",
+      "eslint-plugin-react-hooks": "4.6.0",
+      "eslint-plugin-storybook": "0.6.7",
+      "eslint-plugin-typescript-sort-keys": "2.1.0",
+      "eslint-plugin-unused-imports": "2.0.0",
+      "inspx": "0.0.1-alpha.6",
+      "next": "13.0.0",
+      "postcss": "^8.4.18",
+      "prettier": "^2.7.1",
+      "prettier-plugin-tailwindcss": "^0.1.13",
+      "purgecss": "^5.0.0",
+      "react": "18.2.0",
+      "react-dom": "18.2.0",
+      "tailwindcss": "^3.2.1",
+      "ts-jest": "29.0.3",
+      "tsup": "6.2.3",
+      "typescript": "4.8.4"
+   },
+   "peerDependencies": {
+      "next": ">=13",
+      "react": ">=18",
+      "react-dom": ">=18",
+      "react-uuid": "^2.0.0",
+      "tailwindcss": "^3.2.1",
+      "typescript": ">=4"
+   },
+   "dependencies": {
+      "@faker-js/faker": "7.6.0",
+      "lint-staged": "^13.1.0",
+      "react-uuid": "^2.0.0",
+      "release-it": "^15.5.1",
+      "use-deep-compare": "^1.1.0"
+   },
+   "config": {
+      "commitizen": {
+         "path": "./node_modules/@ryansonshine/cz-conventional-changelog"
+      }
+   },
+   "lint-staged": {
+      "./{src,__tests__}/**/*.{ts,js,jsx,tsx}": [
+         "eslint --ignore-path .gitignore --fix"
+      ]
+   },
+   "release-it": {
+      "git": {
+         "commitMessage": "chore(release): v${version}"
+      },
+      "github": {
+         "release": true
+      },
+      "npm": {
+         "publish": true,
+         "access": "public",
+         "publishPath": "--registry https://registry.npmjs.org"
+      }
+   }
 }
