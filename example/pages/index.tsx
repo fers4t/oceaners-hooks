@@ -1,11 +1,19 @@
 import React from 'react';
-import { useClientOS } from 'oceaners-hooks';
-import { useHover } from '../../dist/cjs';
+import { useBoolean, useClickOutside, useDebounce } from 'oceaners-hooks';
 
 export default function Home() {
-   const { clientOS } = useClientOS();
-   const [isHovered, bind] = useHover();
-   console.log({ isHovered });
+   const isOpen = useBoolean(false);
 
-   return <div {...bind}>sss</div>;
+   return (
+      <div>
+         <span>{isOpen.value ? 'acik' : 'kapali'}</span>
+         <button
+            onClick={() => {
+               isOpen.toggle();
+            }}
+         >
+            toggle
+         </button>
+      </div>
+   );
 }
