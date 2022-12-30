@@ -15,6 +15,7 @@ export { default as useMap } from './useMap';
 export { useMemoCompare } from './useMemoCompare';
 export { default as useNumber } from './useNumber';
 export { default as usePageLoaded } from './usePageLoaded';
+export { usePrevious } from './usePrevious';
 export { default as useStateful } from './useStateful';
 export { default as useStep } from './useStep';
 export { default as useVibrate } from './useVibrate';
