@@ -9,6 +9,7 @@ export { default as useElementSize } from './useElementSize';
 export { useEventListener } from './useEventListener';
 export { default as useFocus } from './useFocus';
 export { default as useHover } from './useHover';
+export { useInViewport } from './useInViewport';
 export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 export { default as useMap } from './useMap';
 export { default as useNumber } from './useNumber';
