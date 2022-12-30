@@ -1,6 +1,10 @@
 // https://github.com/sandiiarov/use-events/blob/master/src/useHover/index.tsx
 import React from 'react';
 
+/**
+ * @example const [isHovered, bind] = useHover();
+ * @returns [isHovered, bind]
+ */
 function useHover(): [
    boolean,
    {
