@@ -3,7 +3,6 @@
 > Most using hooks for our team. IN DEVELOPMENT
 
 [![NPM](https://img.shields.io/npm/v/oceaners-hooks.svg)](https://www.npmjs.com/package/oceaners-hooks)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
@@ -14,15 +13,18 @@ npm install --save oceaners-hooks@next
 ## Usage
 
 ```tsx
-import React, { Component } from 'react';
+import React from 'react';
+import { useBoolean, useFocus } from 'oceaners-hooks';
 
-import MyComponent from 'oceaners-hooks';
-import 'oceaners-hooks/dist/index.css';
+export default function Home() {
+   const [isFocused, bind] = useFocus();
+   console.log({ isFocused });
 
-class Example extends Component {
-   render() {
-      return <MyComponent />;
-   }
+   return (
+      <div>
+         <button {...bind}>toggle</button>
+      </div>
+   );
 }
 ```
 
