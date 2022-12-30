@@ -6,7 +6,7 @@ export { default as useClientOS } from './useClientOS';
 export { default as useDebounce } from './useDebounce';
 export { useDeviceOrientation } from './useDeviceOrientation';
 export { default as useElementSize } from './useElementSize';
-export { default as useEventListener } from './useEventListener';
+export { useEventListener } from './useEventListener';
 export { default as useFocus } from './useFocus';
 export { default as useHover } from './useHover';
 export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';

@@ -1,62 +1,50 @@
-// https://github.com/foray1010/use-typed-event-listener
-import * as React from 'react';
-import { useDeepCompareMemo } from 'use-deep-compare';
+import { useEffect, useRef } from 'react';
 
-function useEventListener<KD extends keyof DocumentEventMap>(
-   element: Document | null | undefined,
-   eventType: KD,
-   listener: (this: Document, evt: DocumentEventMap[KD]) => void,
-   options?: boolean | AddEventListenerOptions
-): void;
-function useEventListener<KH extends keyof HTMLElementEventMap>(
-   element: HTMLElement | null | undefined,
-   eventType: KH,
-   listener: (this: HTMLElement, evt: HTMLElementEventMap[KH]) => void,
-   options?: boolean | AddEventListenerOptions
-): void;
-function useEventListener<KW extends keyof WindowEventMap>(
-   element: Window | null | undefined,
-   eventType: KW,
-   listener: (this: Window, evt: WindowEventMap[KW]) => void,
-   options?: boolean | AddEventListenerOptions
-): void;
-function useEventListener(
-   element: Document | HTMLElement | Window | null | undefined,
-   eventType: string,
-   listener: (evt: Event) => void,
-   options?: boolean | AddEventListenerOptions
+type AllEventMaps = HTMLElementEventMap & DocumentEventMap & WindowEventMap;
+
+export function useEventListener<K extends keyof HTMLElementEventMap>(
+   type: K,
+   listener: (event: HTMLElementEventMap[K]) => void,
+   element: HTMLElement
 ): void;
 
-function useEventListener<
-   KD extends keyof DocumentEventMap,
-   KH extends keyof HTMLElementEventMap,
-   KW extends keyof WindowEventMap
->(
-   element: Document | HTMLElement | Window | null | undefined,
-   eventType: KD | KH | KW | string,
-   listener: (
-      this: typeof element,
-      evt: DocumentEventMap[KD] | HTMLElementEventMap[KH] | WindowEventMap[KW] | Event
-   ) => void,
-   options?: boolean | AddEventListenerOptions
-): void {
-   const listenerRef = React.useRef(listener);
-   listenerRef.current = listener;
+export function useEventListener<K extends keyof DocumentEventMap>(
+   type: K,
+   listener: (event: DocumentEventMap[K]) => void,
+   element: Document
+): void;
 
-   const memorizedOptions = useDeepCompareMemo(() => options, [options]);
+export function useEventListener<K extends keyof WindowEventMap>(
+   type: K,
+   listener: (event: WindowEventMap[K]) => void,
+   element?: Window
+): void;
 
-   React.useEffect(() => {
-      if (!element) return undefined;
+/**
+ * @example useEventListener('click', (e) => console.log(e), ref.current)
+ */
+export function useEventListener<K extends keyof AllEventMaps>(
+   type: K,
+   listener: (event: AllEventMaps[K]) => void,
+   element?: HTMLElement | Document | Window | null
+) {
+   const listenerRef = useRef(listener);
 
-      // to avoid keep updating listener in DOM
-      const wrappedListener: typeof listenerRef.current = (evt) => listenerRef.current.call(element, evt);
+   useEffect(() => {
+      listenerRef.current = listener;
+   });
 
-      element.addEventListener(eventType, wrappedListener, memorizedOptions);
+   useEffect(() => {
+      const el = element === undefined ? window : element;
+
+      const internalListener = (ev: AllEventMaps[K]) => {
+         return listenerRef.current(ev);
+      };
+
+      el?.addEventListener(type, internalListener as EventListenerOrEventListenerObject);
 
       return () => {
-         element.removeEventListener(eventType, wrappedListener, memorizedOptions);
+         el?.removeEventListener(type, internalListener as EventListenerOrEventListenerObject);
       };
-   }, [element, eventType, memorizedOptions]);
+   }, [type, element]);
 }
-
-export default useEventListener;
