@@ -12,6 +12,7 @@ export { default as useHover } from './useHover';
 export { useInViewport } from './useInViewport';
 export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 export { default as useMap } from './useMap';
+export { useMemoCompare } from './useMemoCompare';
 export { default as useNumber } from './useNumber';
 export { default as usePageLoaded } from './usePageLoaded';
 export { default as useStateful } from './useStateful';
