@@ -1,6 +1,4 @@
-// https://usehooks-ts.com/react-hook/use-element-size
-import { useCallback, useState } from 'react';
-// See: https://usehooks-ts.com/react-hook/use-isomorphic-layout-effect
+import { useState, useCallback } from 'react';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 import { useWindowEvent } from '../useWindowEvent';
 
@@ -26,11 +24,13 @@ function useElementSize<T extends HTMLElement = HTMLDivElement>(): [(node: T | n
 
    // Prevent too many rendering using useCallback
    const handleSize = useCallback(() => {
-      setSize({
-         width: ref?.offsetWidth || 0,
-         height: ref?.offsetHeight || 0
-      });
-   }, [ref?.offsetHeight, ref?.offsetWidth]);
+      if (ref) {
+         setSize({
+            width: ref.offsetWidth,
+            height: ref.offsetHeight
+         });
+      }
+   }, [ref]);
 
    useWindowEvent('resize', handleSize, {
       capture: true
@@ -38,7 +38,7 @@ function useElementSize<T extends HTMLElement = HTMLDivElement>(): [(node: T | n
 
    useIsomorphicLayoutEffect(() => {
       handleSize();
-   }, [ref?.offsetHeight, ref?.offsetWidth]);
+   }, [ref]);
 
    return [setRef, size];
 }
