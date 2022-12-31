@@ -50,4 +50,5 @@ export { default as useVibrate } from './useVibrate';
 export { default as useWhyDidYouUpdate } from './useWhyDidYouUpdate';
 export { useWindowEvent } from './useWindowEvent';
 export { default as useWindowResize } from './useWindowResize';
+export { default as useWindowScroll } from './useWindowScroll';
 export { default as useWindowScrollPosition } from './useWindowScrollPosition';
