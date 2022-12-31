@@ -26,6 +26,7 @@ export { useLockFn } from './useLockFn';
 export { default as useMap } from './useMap';
 export { useMemoCompare } from './useMemoCompare';
 export { useMemoizedFn } from './useMemoizedFn';
+export { useMergedRef } from './useMergedRef';
 export { useMount } from './useMount';
 export { useNetwork } from './useNetwork';
 export { default as useNumber } from './useNumber';
