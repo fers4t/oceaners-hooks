@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type UA = 'macintosh' | 'windows' | 'android' | 'linux' | 'iphone';
 
 export default function useClientOS() {
    const [clientOS, setUserOs] = useState<UA>();
 
-   React.useEffect(() => {
+   useEffect(() => {
       if (!window) return;
       const userAgent = navigator.userAgent.toLowerCase();
       if (userAgent.indexOf('macintosh') > -1) {
