@@ -31,6 +31,7 @@ specifiers:
   inspx: 0.0.1-alpha.6
   lint-staged: ^13.1.0
   lodash: ^4.17.21
+  lodash.throttle: ^4.1.1
   next: 13.0.0
   postcss: ^8.4.18
   prettier: ^2.7.1
@@ -52,6 +53,7 @@ dependencies:
   '@faker-js/faker': 7.6.0
   lint-staged: 13.1.0
   lodash: 4.17.21
+  lodash.throttle: 4.1.1
   react-uuid: 2.0.0
   release-it: 15.6.0
   screenfull: 6.0.2
@@ -4033,6 +4035,10 @@ packages:
   /lodash.startcase/4.4.0:
     resolution: {integrity: sha512-+WKqsK294HMSc2jEbNgpHpd0JfIBhp7rEV4aqXWqFr6AlXov+SlcgB1Fv01y2kGe3Gc8nMW7VA0SrGuSkRfIEg==}
     dev: true
+
+  /lodash.throttle/4.1.1:
+    resolution: {integrity: sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==}
+    dev: false
 
   /lodash.uniq/4.5.0:
     resolution: {integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==}

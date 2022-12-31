@@ -14,6 +14,7 @@
 # production
 /dist
 /example
+/docs
 /.next
 # misc
 .DS_Store
