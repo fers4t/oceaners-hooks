@@ -31,6 +31,7 @@ export { default as useStateful } from './useStateful';
 export { default as useStep } from './useStep';
 export { useTextSelection } from './useTextSelection';
 export { useToggle } from './useToggle';
+export { useTrackedEffect } from './useTrackedEffect';
 export { useUnmount } from './useUnmount';
 export { useUnmountedRef } from './useUnmountedRef';
 export { useUpdateComponent } from './useUpdateComponent';
