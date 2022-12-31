@@ -47,3 +47,11 @@ export interface SomeCallback<TArgs, TResult = void> {
 export interface CallbackSetter<TArgs> {
    (nextCallback: SomeCallback<TArgs>): void;
 }
+
+/**
+ * Represent a generic function.
+ * Used internally to improve code readability
+ */
+export interface GenericFunction {
+   (...args: any[]): any;
+}

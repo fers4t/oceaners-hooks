@@ -19,6 +19,7 @@ export { useHotkey } from './useHotkey';
 export { default as useHover } from './useHover';
 export { useInViewport } from './useInViewport';
 export { default as useIsMounted } from './useIsMounted';
+export { default as useWillUnmount } from './useWillUnmount';
 export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 export { useLatest } from './useLatest';
 export { useLockFn } from './useLockFn';
