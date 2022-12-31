@@ -3,6 +3,7 @@ import type { useEffect, useLayoutEffect } from 'react';
 
 type EffectHookType = typeof useEffect | typeof useLayoutEffect;
 
+// does not run effect on first render
 const createSafeEffect: (hook: EffectHookType) => EffectHookType = (hook) => (effect, deps) => {
    const isMounted = useRef(false);
 

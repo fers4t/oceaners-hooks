@@ -20,6 +20,7 @@ export { useNetwork } from './useNetwork';
 export { default as useNumber } from './useNumber';
 export { default as usePageLoaded } from './usePageLoaded';
 export { usePrevious } from './usePrevious';
+export * from './useSafeEffect';
 export { useSafeState } from './useSafeState';
 export { default as useStateful } from './useStateful';
 export { default as useStep } from './useStep';
