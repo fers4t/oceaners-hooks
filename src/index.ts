@@ -37,6 +37,7 @@ export { useUnmountedRef } from './useUnmountedRef';
 export { useUpdateComponent } from './useUpdateComponent';
 export { default as useVibrate } from './useVibrate';
 export { default as useWhyDidYouUpdate } from './useWhyDidYouUpdate';
+export { default as useValidatedState } from './useValidatedState';
 export { useWindowEvent } from './useWindowEvent';
 export { default as useWindowResize } from './useWindowResize';
 export { default as useValueHistory } from './useValueHistory';
