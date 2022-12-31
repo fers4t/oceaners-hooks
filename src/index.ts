@@ -12,6 +12,7 @@ export { default as useElementSize } from './useElementSize';
 export { useEventListener } from './useEventListener';
 export { default as useFocus } from './useFocus';
 export { useFullScreen } from './useFullScreen';
+export { useHotkey } from './useHotkey';
 export { default as useHover } from './useHover';
 export { useInViewport } from './useInViewport';
 export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
