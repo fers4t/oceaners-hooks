@@ -43,4 +43,4 @@ function useToggle<D, R>(defaultValue: D = false as unknown as D, reverseValue?:
    return [state, actions];
 }
 
-export default useToggle;
+export { useToggle };

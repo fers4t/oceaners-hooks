@@ -24,6 +24,7 @@ export { useSafeState } from './useSafeState';
 export { default as useStateful } from './useStateful';
 export { default as useStep } from './useStep';
 export { useTextSelection } from './useTextSelection';
+export { useToggle } from './useToggle';
 export { useUnmount } from './useUnmount';
 export { useUnmountedRef } from './useUnmountedRef';
 export { default as useVibrate } from './useVibrate';
