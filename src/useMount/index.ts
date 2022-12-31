@@ -13,4 +13,4 @@ const useMount = (fn: () => void) => {
    }, []);
 };
 
-export default useMount;
+export { useMount };

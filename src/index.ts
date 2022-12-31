@@ -15,6 +15,7 @@ export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffec
 export { useLatest } from './useLatest';
 export { default as useMap } from './useMap';
 export { useMemoCompare } from './useMemoCompare';
+export { useMount } from './useMount';
 export { useNetwork } from './useNetwork';
 export { default as useNumber } from './useNumber';
 export { default as usePageLoaded } from './usePageLoaded';
