@@ -1,4 +1,5 @@
 export const isBrowser = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+export const isNavigator = !!(typeof navigator !== 'undefined');
 export const isObject = (value: unknown): value is Record<any, any> => value !== null && typeof value === 'object';
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const isFunction = (value: unknown): value is Function => typeof value === 'function';

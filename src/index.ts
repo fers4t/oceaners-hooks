@@ -36,6 +36,7 @@ export { useToggle } from './useToggle';
 export { useTrackedEffect } from './useTrackedEffect';
 export { useUnmount } from './useUnmount';
 export { useUnmountedRef } from './useUnmountedRef';
+export { default as useBattery } from './useBattery';
 export { useUpdateComponent } from './useUpdateComponent';
 export { default as useValidatedState } from './useValidatedState';
 export { default as useValueHistory } from './useValueHistory';
