@@ -5,6 +5,7 @@ export { default as useBoolean } from './useBoolean';
 export { useClickOutside } from './useClickOutside';
 export { default as useClientOS } from './useClientOS';
 export { default as useDebounce } from './useDebounce';
+export { useDebounceFn } from './useDebounceFn';
 export { useDeviceOrientation } from './useDeviceOrientation';
 export { default as useElementSize } from './useElementSize';
 export { useEventListener } from './useEventListener';
