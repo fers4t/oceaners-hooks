@@ -1,17 +1,15 @@
 import { useEffect, useRef } from 'react';
-import { usePrevious } from '../usePrevious';
 
 export function useChangeTimes<T>(value: T): number {
    const count = useRef(0);
-   const previousValue = usePrevious(value);
-   const mounted = useRef(false);
-   useEffect(() => {
-      mounted.current = true;
-   }, []);
+   const previousValue = useRef<T>();
 
-   if (mounted.current && value !== previousValue) {
-      count.current++;
-   }
+   useEffect(() => {
+      if (value !== previousValue.current) {
+         count.current++;
+         previousValue.current = value;
+      }
+   }, [value]);
 
    return count.current;
 }
