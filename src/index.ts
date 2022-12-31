@@ -35,6 +35,7 @@ export { usePrevious } from './usePrevious';
 export { useRenderTimes } from './useRenderTimes';
 export * from './useSafeEffect';
 export { useSafeState } from './useSafeState';
+export { useScrollLock } from './useScrollLock';
 export { default as useSetState } from './useSetState';
 export { default as useSlider } from './useSlider';
 export { default as useStartTyping } from './useStartTyping';
