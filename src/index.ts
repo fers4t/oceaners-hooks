@@ -32,6 +32,7 @@ export { usePrevious } from './usePrevious';
 export * from './useSafeEffect';
 export { useSafeState } from './useSafeState';
 export { default as useSetState } from './useSetState';
+export { default as useSlider } from './useSlider';
 export { default as useStartTyping } from './useStartTyping';
 export { default as useStateful } from './useStateful';
 export { default as useStep } from './useStep';
