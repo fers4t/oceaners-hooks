@@ -31,6 +31,7 @@ export { useTextSelection } from './useTextSelection';
 export { useToggle } from './useToggle';
 export { useUnmount } from './useUnmount';
 export { useUnmountedRef } from './useUnmountedRef';
+export { useUpdateComponent } from './useUpdateComponent';
 export { default as useVibrate } from './useVibrate';
 export { useWindowEvent } from './useWindowEvent';
 export { default as useWindowResize } from './useWindowResize';
