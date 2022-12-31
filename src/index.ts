@@ -3,6 +3,7 @@ export { default as useActive } from './useActive';
 export { default as useArray } from './useArray';
 export { default as useBattery } from './useBattery';
 export { default as useBoolean } from './useBoolean';
+export { useChangeTimes } from './useChangeTimes';
 export { useClickOutside } from './useClickOutside';
 export { default as useClientOS } from './useClientOS';
 export { default as useDebounce } from './useDebounce';
