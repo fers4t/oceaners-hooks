@@ -1,5 +1,6 @@
 // https://github.com/21kb/react-hooks/blob/main/packages/react-device-orientation-hook/src/index.ts
 import { useEffect, useState } from 'react';
+import { isBrowser } from '../misc';
 
 export interface IOrientationState {
    angle: number;
@@ -11,21 +12,20 @@ export const defaultState: IOrientationState = {
    type: 'landscape-primary'
 };
 
-const useDeviceOrientation = (initialState: IOrientationState = defaultState) => {
-   const [state, setState] = useState(initialState);
+const useDeviceOrientation = () => {
+   const [state, setState] = useState<IOrientationState>();
 
    const onOrientationChangeEvent = () => {
       const { orientation } = screen;
       const { angle, type } = orientation;
 
-      if (!orientation) {
-         setState(initialState);
-      }
-
       setState({ angle, type });
    };
 
    useEffect(() => {
+      if (!isBrowser) return;
+      // get the initial orientation
+      onOrientationChangeEvent();
       window.addEventListener('orientationchange', onOrientationChangeEvent, true);
 
       return () => {
