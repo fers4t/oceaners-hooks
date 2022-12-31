@@ -26,7 +26,7 @@
       "source.fixAll": true,
       "source.fixAll.eslint": true
    },
-   "editor.lineNumbers": "off",
+   // "editor.lineNumbers": "off",
    "eslint.format.enable": true,
    "eslint.alwaysShowStatus": true,
    "docthis.includeDescriptionTag": true,

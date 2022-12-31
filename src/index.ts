@@ -36,6 +36,7 @@ export { useUnmount } from './useUnmount';
 export { useUnmountedRef } from './useUnmountedRef';
 export { useUpdateComponent } from './useUpdateComponent';
 export { default as useVibrate } from './useVibrate';
+export { default as useWhyDidYouUpdate } from './useWhyDidYouUpdate';
 export { useWindowEvent } from './useWindowEvent';
 export { default as useWindowResize } from './useWindowResize';
 export { default as useWindowScrollPosition } from './useWindowScrollPosition';
