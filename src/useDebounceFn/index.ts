@@ -1,11 +1,32 @@
 import debounce from 'lodash/debounce';
 import { useMemo } from 'react';
 import { isDev, isFunction } from '../misc';
-import { useLatest } from '../useLatest';
 import { useUnmount } from '../useUnmount';
 
 type noop = (...args: any[]) => any;
 
+/**
+ * Prevents a function from being called more than once within a specified time.
+ * @example
+ * const [value, setValue] = useState(0);
+   const { run } = useDebounceFn(
+      () => {
+         setValue(value + 1);
+      },
+      {
+         wait: 500
+      }
+   );
+
+   return (
+      <div>
+         <p style={{ marginTop: 16 }}> Clicked count: {value} </p>
+         <button type="button" onClick={run}>
+            Click fast!
+         </button>
+      </div>
+   );
+ */
 function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions) {
    if (isDev) {
       if (!isFunction(fn)) {
@@ -13,20 +34,18 @@ function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions) {
       }
    }
 
-   const fnRef = useLatest(fn);
-
    const wait = options?.wait ?? 1000;
 
    const debounced = useMemo(
       () =>
          debounce(
             (...args: Parameters<T>): ReturnType<T> => {
-               return fnRef.current(...args);
+               return fn(...args);
             },
             wait,
             options
          ),
-      []
+      [fn, wait, options]
    );
 
    useUnmount(() => {
@@ -48,3 +67,24 @@ export interface DebounceOptions {
    trailing?: boolean;
    wait?: number;
 }
+
+`
+const [value, setValue] = useState(0);
+   const { run } = useDebounceFn(
+      () => {
+         setValue(value + 1);
+      },
+      {
+         wait: 500
+      }
+   );
+
+   return (
+      <div>
+         <p style={{ marginTop: 16 }}> Clicked count: {value} </p>
+         <button type="button" onClick={run}>
+            Click fast!
+         </button>
+      </div>
+   );
+`;
