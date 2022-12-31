@@ -40,6 +40,7 @@ specifiers:
   react-dom: 18.2.0
   react-uuid: ^2.0.0
   release-it: ^15.5.1
+  screenfull: ^6.0.2
   tailwindcss: ^3.2.1
   ts-jest: 29.0.3
   tsup: 6.2.3
@@ -52,6 +53,7 @@ dependencies:
   lodash: 4.17.21
   react-uuid: 2.0.0
   release-it: 15.6.0
+  screenfull: 6.0.2
   use-deep-compare: 1.1.0_react@18.2.0
 
 devDependencies:
@@ -5221,6 +5223,11 @@ packages:
     dependencies:
       loose-envify: 1.4.0
     dev: true
+
+  /screenfull/6.0.2:
+    resolution: {integrity: sha512-AQdy8s4WhNvUZ6P8F6PB21tSPIYKniic+Ogx0AacBMjKP1GUHN2E9URxQHtCusiwxudnCKkdy4GrHXPPJSkCCw==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+    dev: false
 
   /semver-diff/4.0.0:
     resolution: {integrity: sha512-0Ju4+6A8iOnpL/Thra7dZsSlOHYAHIeMxfhWQRI1/VLcT3WDBZKKtQt/QkBOsiIN9ZpuvHE6cGZ0x4glCMmfiA==}
