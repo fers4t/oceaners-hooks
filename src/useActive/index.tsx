@@ -11,8 +11,8 @@ function useActive(): [
 
    const bind = React.useMemo(
       () => ({
-         onMouseDown: () => void setActive(true),
-         onMouseUp: () => void setActive(false)
+         onMouseDown: () => setActive(true),
+         onMouseUp: () => setActive(false)
       }),
       []
    );
