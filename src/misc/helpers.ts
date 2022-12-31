@@ -9,3 +9,5 @@ export const isBoolean = (value: unknown): value is boolean => typeof value === 
 export const isNumber = (value: unknown): value is number => typeof value === 'number';
 export const isUndef = (value: unknown): value is undefined => typeof value === 'undefined';
 export const isDev = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+export const safeHasOwnProperty = (obj: any, prop: string): boolean =>
+   obj ? Object.prototype.hasOwnProperty.call(obj, prop) : false;

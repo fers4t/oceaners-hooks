@@ -1,5 +1,5 @@
 import type { MutableRefObject } from 'react';
-import { isBrowser, isFunction } from '../misc/helpers';
+import { isBrowser, isFunction } from './misc/helpers';
 
 type TargetValue<T> = T | undefined | null;
 

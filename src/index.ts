@@ -10,6 +10,7 @@ export { useDebounceFn } from './useDebounceFn';
 export * from './useDeepCompareEffect';
 export { useDeviceOrientation } from './useDeviceOrientation';
 export { default as useElementSize } from './useElementSize';
+export { useEvent } from './useEvent';
 export { useEventListener } from './useEventListener';
 export { default as useFocus } from './useFocus';
 export { useFullScreen } from './useFullScreen';
