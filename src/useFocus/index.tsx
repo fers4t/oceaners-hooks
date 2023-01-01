@@ -1,5 +1,6 @@
 // https://sandiiarov.github.io/use-events/#/docs-use-focus
 import React from 'react';
+import { useSafeState } from '../useSafeState';
 
 /**
  * @example const [isFocused, bind] = useFocus();
@@ -8,21 +9,26 @@ import React from 'react';
 function useFocus(): [
    boolean,
    {
-      onBlur: (e: React.FocusEvent) => void;
-      onFocus: (e: React.FocusEvent) => void;
+      onMouseDown: (e) => void;
+      onMouseUp: (e) => void;
    }
 ] {
-   const [isFocused, setFocused] = React.useState(false);
+   const [isFocused, setFocused] = useSafeState<boolean>(false);
 
    const bind = React.useMemo(
       () => ({
-         onFocus: () => void setFocused(true),
-         onBlur: () => void setFocused(false)
+         onMouseDown: () => setFocused(true),
+         onMouseUp: () => setFocused(false)
       }),
-      []
+      [setFocused]
    );
 
    return [isFocused, bind];
 }
 
 export default useFocus;
+
+`
+const [isFocused, bind] = useFocus();
+<input placeholder="yo" {...bind} />
+`;

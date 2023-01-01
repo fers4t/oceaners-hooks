@@ -32,10 +32,10 @@ module.exports = {
       'import/extensions': 'off',
       'import/no-extraneous-dependencies': 'off',
       'import/prefer-default-export': 'off',
-      'no-unused-vars': 'off',
       'no-nested-ternary': 'off',
+      'sort-imports': 'off',
       '@typescript-eslint/no-unused-vars': 'warn',
-      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-imports': 'warn',
       '@typescript-eslint/no-var-requires': 'warn'
    }
 };
