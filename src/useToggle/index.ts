@@ -1,28 +1,19 @@
 import { useMemo, useState } from 'react';
 
-export interface Actions<T> {
+type Actions<T> = {
    set: (value: T) => void;
-   /**
-    * Set state to defaultValue
-    */
    setLeft: () => void;
-   /**
-    * Set state to reverseValue if reverseValue is available. Otherwise set it to the reverse of defaultValue
-    */
    setRight: () => void;
    toggle: () => void;
-}
+};
 
 function useToggle<T = boolean>(): [boolean, Actions<T>];
-
 function useToggle<T>(defaultValue: T): [T, Actions<T>];
-
 function useToggle<T, U>(defaultValue: T, reverseValue: U): [T | U, Actions<T | U>];
-
 function useToggle<D, R>(defaultValue: D = false as unknown as D, reverseValue?: R) {
    const [state, setState] = useState<D | R>(defaultValue);
 
-   const actions = useMemo(() => {
+   const actions = useMemo((): Actions<D | R> => {
       const reverseValueOrigin = (reverseValue === undefined ? !defaultValue : reverseValue) as D | R;
 
       const toggle = () => setState((s) => (s === defaultValue ? reverseValueOrigin : defaultValue));
@@ -36,11 +27,11 @@ function useToggle<D, R>(defaultValue: D = false as unknown as D, reverseValue?:
          setLeft,
          setRight
       };
-      // useToggle ignore value change
-      // }, [defaultValue, reverseValue]);
-   }, []);
+   }, [defaultValue, reverseValue]);
 
    return [state, actions];
 }
 
 export { useToggle };
+
+`const [state, actions] = useToggle(false, true);`;
