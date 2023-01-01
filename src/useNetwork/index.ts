@@ -50,10 +50,14 @@ function useNetwork(): NetworkState {
       };
    });
 
+   // Only run the effect once
    useEffect(() => {
       if (!window) return;
 
+      // Initialize state with current network status
       setState({ since: undefined, online: navigator ? navigator.onLine : false, ...getConnectionProperty() });
+
+      // Define event listeners
       const onOnline = () => {
          setState((prevState) => ({
             ...prevState,
@@ -77,18 +81,20 @@ function useNetwork(): NetworkState {
          }));
       };
 
+      // Add event listeners
       window.addEventListener(NetworkEventType.ONLINE, onOnline);
       window.addEventListener(NetworkEventType.OFFLINE, onOffline);
 
       const connection = getConnection();
       connection?.addEventListener(NetworkEventType.CHANGE, onConnectionChange);
 
+      // Remove event listeners on cleanup
       return () => {
          window.removeEventListener(NetworkEventType.ONLINE, onOnline);
          window.removeEventListener(NetworkEventType.OFFLINE, onOffline);
          connection?.removeEventListener(NetworkEventType.CHANGE, onConnectionChange);
       };
-   }, []);
+   }, []); // Empty array ensures the effect is only run once
 
    return state;
 }
