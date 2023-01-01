@@ -1,89 +1,59 @@
-import { useState } from 'react';
-import screenfull from 'screenfull';
-import { BasicTarget, getTargetElement } from '../types';
-import { useLatest } from '../useLatest';
-import { useMemoizedFn } from '../useMemoizedFn';
-import { useUnmount } from '../useUnmount';
+import { RefObject, useEffect, useRef, useState } from 'react';
+import { isBrowser } from '../misc';
+import { getTargetElement } from '../types';
 
-export interface Options {
-   onEnter?: () => void;
-   onExit?: () => void;
+function useFullScreen(target: RefObject<HTMLElement> | HTMLElement | null) {
+   const [isFullscreen, setIsFullscreen] = useState(false);
+   const element = useRef<HTMLElement | null>(null);
+   const overflowValue = useRef<string | null>(null);
+
+   useEffect(() => {
+      if (!isBrowser) return;
+
+      element.current = getTargetElement(target, document.getElementById('__next'));
+      overflowValue.current = element.current.style.overflowY;
+   }, [target]);
+
+   function enableFullScreen() {
+      if (element.current) {
+         if (element.current.requestFullscreen) {
+            element.current.requestFullscreen(); // @ts-ignore
+         } else if (element.current.mozRequestFullScreen) {
+            // @ts-ignore
+            element.current.mozRequestFullScreen(); // @ts-ignore
+         } else if (element.current.webkitRequestFullscreen) {
+            // @ts-ignore
+            element.current.webkitRequestFullscreen(); // @ts-ignore
+         } else if (element.current.msRequestFullscreen) {
+            // @ts-ignore
+            element.current.msRequestFullscreen();
+         }
+
+         // make element scrollable
+         element.current.style.overflowY = 'auto';
+         setIsFullscreen(true);
+      }
+   }
+
+   function disableFullScreen() {
+      if (document.exitFullscreen) {
+         document.exitFullscreen(); // @ts-ignore
+      } else if (document.mozCancelFullScreen) {
+         // @ts-ignore
+         document.mozCancelFullScreen(); // @ts-ignore
+      } else if (document.webkitExitFullscreen) {
+         // @ts-ignore
+         document.webkitExitFullscreen(); // @ts-ignore
+      } else if (document.msExitFullscreen) {
+         // @ts-ignore
+         document.msExitFullscreen(); // @ts-ignore
+      }
+
+      element.current.style.overflowY = overflowValue.current;
+      setIsFullscreen(false);
+   }
+
+   return { isFullscreen, enableFullScreen, disableFullScreen };
 }
-
-const useFullScreen = (target: BasicTarget, options?: Options) => {
-   const { onExit, onEnter } = options || {};
-
-   const onExitRef = useLatest(onExit);
-   const onEnterRef = useLatest(onEnter);
-
-   const [state, setState] = useState(false);
-
-   const onChange = () => {
-      if (screenfull.isEnabled) {
-         const el = getTargetElement(target);
-
-         if (!screenfull.element) {
-            onExitRef.current?.();
-            setState(false);
-            screenfull.off('change', onChange);
-         } else {
-            const isFullscreen = screenfull.element === el;
-            if (isFullscreen) {
-               onEnterRef.current?.();
-            } else {
-               onExitRef.current?.();
-            }
-            setState(isFullscreen);
-         }
-      }
-   };
-
-   const enterFullscreen = () => {
-      const el = getTargetElement(target);
-      if (!el) {
-         return;
-      }
-
-      if (screenfull.isEnabled) {
-         try {
-            screenfull.request(el);
-            screenfull.on('change', onChange);
-         } catch (error) {
-            console.error(error);
-         }
-      }
-   };
-
-   const exitFullscreen = () => {
-      const el = getTargetElement(target);
-      if (screenfull.isEnabled && screenfull.element === el) {
-         screenfull.exit();
-      }
-   };
-
-   const toggleFullscreen = () => {
-      if (state) {
-         exitFullscreen();
-      } else {
-         enterFullscreen();
-      }
-   };
-
-   useUnmount(() => {
-      if (screenfull.isEnabled) {
-         screenfull.off('change', onChange);
-      }
-   });
-
-   return [
-      state,
-      {
-         enterFullscreen: useMemoizedFn(enterFullscreen),
-         exitFullscreen: useMemoizedFn(exitFullscreen),
-         toggleFullscreen: useMemoizedFn(toggleFullscreen),
-         isEnabled: screenfull.isEnabled
-      }
-   ] as const;
-};
 
 export { useFullScreen };
