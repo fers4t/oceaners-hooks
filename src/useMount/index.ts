@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import { isDev, isFunction } from '../misc';
 
+/**
+ * Returns callback after component is mounted.
+ */
 const useMount = (fn: () => void) => {
    if (isDev) {
       if (!isFunction(fn)) {
@@ -10,7 +13,7 @@ const useMount = (fn: () => void) => {
 
    useEffect(() => {
       fn?.();
-   }, []);
+   });
 };
 
 export { useMount };
