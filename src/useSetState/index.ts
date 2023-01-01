@@ -1,45 +1,42 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useReducer, useRef } from 'react';
 import { isFunction } from '../misc';
 
 export type SetState<S extends Record<string, any>> = <K extends keyof S>(
-   state: Pick<S, K> | null | ((prevState: Readonly<S>) => Pick<S, K> | S | null)
+   state: Pick<S, K> | null | ((prevState: Readonly<S>) => Pick<S, K> | S | null),
+   options?: {
+      deep?: boolean;
+      merge?: (prev: S, next: S) => S;
+   }
 ) => void;
 
-/**
- * @example
- *  const [state, setState] = useSetState<State>({
-        hello: '',
-        count: 0,
-    });
+const useSetState = <S extends Record<string, any>>(initialState: S | (() => S)): [S, SetState<S>, () => void] => {
+   const initialStateRef = useRef(initialState);
+   const [state, setState] = useReducer((prevState, patch) => {
+      const newState = isFunction(patch) ? patch(prevState) : patch;
+      return newState ? { ...prevState, ...newState } : prevState;
+   }, initialState);
 
-    return (
-        <div>
-        <pre>{JSON.stringify(state, null, 2)}</pre>
-        <p>
-            <button type="button" onClick={() => setState({ hello: 'world' })}>
-            set hello
-            </button>
-            <button type="button" onClick={() => setState({ foo: 'bar' })} style={{ margin: '0 8px' }}>
-            set foo
-            </button>
-            <button type="button" onClick={() => setState((prev) => ({ count: prev.count + 1 }))}>
-            count + 1
-            </button>
-        </p>
-        </div>
-    );
- */
-const useSetState = <S extends Record<string, any>>(initialState: S | (() => S)): [S, SetState<S>] => {
-   const [state, setState] = useState<S>(initialState);
+   const setMergeState = useCallback(
+      (patch, options) => {
+         const { deep, merge } = options || {};
+         setState((prevState) => {
+            const newState = isFunction(patch) ? patch(prevState) : patch;
 
-   const setMergeState = useCallback((patch) => {
-      setState((prevState) => {
-         const newState = isFunction(patch) ? patch(prevState) : patch;
-         return newState ? { ...prevState, ...newState } : prevState;
-      });
-   }, []);
+            if (deep) {
+               return merge ? merge(prevState, newState) : { ...prevState, ...newState };
+            }
 
-   return [state, setMergeState];
+            return newState ? { ...prevState, ...newState } : prevState;
+         });
+      },
+      [setState]
+   );
+
+   const resetState = useCallback(() => {
+      setState(initialStateRef.current);
+   }, [setState]);
+
+   return [state, setMergeState, resetState];
 };
 
 export default useSetState;

@@ -7,7 +7,6 @@ export function useScrollLock(lock: boolean): void {
          return;
       }
 
-      /* istanbul ignore next */
       if (typeof document === 'undefined') {
          return;
       }
