@@ -1,10 +1,9 @@
 import { useRef, useCallback } from 'react';
 
 /**
- * Add lock to an async function to prevent parallel executions.
+ * Add lock to an async function to prevent parallel executions. Prevents calling same function multiple times in parallel.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-constraint
-function useLockFn<P extends any[] = any[], V extends any = any>(fn: (...args: P) => Promise<V>) {
+function useLockFn<P extends any[] = any[], V = any>(fn: (...args: P) => Promise<V>) {
    const lockRef = useRef(false);
 
    return useCallback(
