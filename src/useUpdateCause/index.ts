@@ -1,36 +1,51 @@
-import shallowEquals from 'shallowequal';
-import deepEquals from 'fast-deep-equal';
-import { usePrevious } from '../usePrevious';
-import keyBy from 'lodash/keyBy';
+// updateCause.ts
 
-export function useUpdateCause<T extends Record<string, any>>(props: T, print = true): UpdateCause[] {
-   const previous = usePrevious(props);
+import { useEffect, useRef } from 'react';
+import { isDeepEqual } from '../misc/isDeepEqual';
+import { isShallowEqual } from '../misc/isShallowEqual';
 
-   if (previous === undefined) {
-      return [];
-   }
-
-   const causes = findUpdateCause(previous, props);
-
-   if (print && causes.length) {
-      /* eslint-disable no-console */
-      console.warn('Component updated from props changes');
-      console.table(
-         keyBy(causes, (c) => c.propName),
-         ['previousValue', 'currentValue', 'shallowEquals', 'deepEquals']
-      );
-      /* eslint-enable no-console */
-   }
-
-   return causes;
-}
-
-export interface UpdateCause {
+export type UpdateCause = {
    currentValue: any;
    deepEquals: boolean;
    previousValue: any;
    propName: string;
    shallowEquals: boolean;
+};
+
+export type UseUpdateCauseProps<T> = {
+   onPropsChange: (causes: UpdateCause[]) => void;
+   print?: boolean;
+   props: T;
+};
+
+export function useUpdateCause<T extends Record<string, any>>({
+   props,
+   onPropsChange,
+   print = true
+}: UseUpdateCauseProps<T>) {
+   const previousProps = useRef<T>();
+
+   useEffect(() => {
+      if (!previousProps.current) {
+         previousProps.current = props;
+         return;
+      }
+
+      const causes = findUpdateCause(previousProps.current, props);
+      previousProps.current = props;
+
+      if (print && causes.length) {
+         console.warn('Component updated from props changes');
+         console.table(
+            causes.reduce((acc, c) => ({ ...acc, [c.propName]: c }), {}),
+            ['previousValue', 'currentValue', 'shallowEquals', 'deepEquals']
+         );
+      }
+
+      if (causes.length) {
+         onPropsChange(causes);
+      }
+   }, [props]);
 }
 
 export function findUpdateCause<T extends Record<string, any>>(previous: T, current: T): UpdateCause[] {
@@ -42,14 +57,13 @@ export function findUpdateCause<T extends Record<string, any>>(previous: T, curr
       const currentValue = current[key];
 
       if (previousValue !== currentValue) {
-         const cause: UpdateCause = {
+         causes.push({
             previousValue,
             currentValue,
             propName: key,
-            shallowEquals: shallowEquals(previousValue, currentValue),
-            deepEquals: deepEquals(previousValue, currentValue)
-         };
-         causes.push(cause);
+            shallowEquals: isShallowEqual(previousValue, currentValue),
+            deepEquals: isDeepEqual(previousValue, currentValue)
+         });
       }
    }
 

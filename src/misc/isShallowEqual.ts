@@ -1,4 +1,4 @@
-export function isDeepEqual(a: any, b: any): boolean {
+export function isShallowEqual(a: any, b: any): boolean {
    if (a === b) {
       return true;
    }
@@ -19,7 +19,7 @@ export function isDeepEqual(a: any, b: any): boolean {
    }
 
    for (const key of keysA) {
-      if (!isDeepEqual(a[key], b[key])) {
+      if (a[key] !== b[key]) {
          return false;
       }
    }
