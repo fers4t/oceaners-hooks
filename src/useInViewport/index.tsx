@@ -1,68 +1,62 @@
-import React, { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { BasicTarget, getTargetElement } from '../types';
+import useEffectWithTarget from '../useEffectWithTarget';
 
-export interface InviewPortType {
-   callback: () => void;
-   freezeOnceVisible?: boolean;
-   options?: IntersectionObserverInit | undefined;
-   target: HTMLElement | null;
+export interface Options {
+   root?: BasicTarget<Element>;
+   rootMargin?: string;
+   threshold?: number | number[];
 }
-/**
- * @example
- *    const inView = useInViewport({
-         target: ref.current,
-         callback: () => { // runs on in view
-            console.log('inView');
+
+interface Props {
+   options?: Options;
+   target?: BasicTarget;
+}
+
+function useInViewport(props?: Props) {
+   const { options, target } = props || {};
+   const [state, setState] = useState<boolean>();
+   const [ratio, setRatio] = useState<number>();
+   const componentRef = useRef(null);
+   const [_target, setTarget] = useState<BasicTarget | null>(target ?? null);
+
+   useEffect(() => {
+      if (!componentRef || _target) return;
+      setTarget(componentRef.current);
+   }, [componentRef.current, _target]);
+
+   useEffectWithTarget(
+      () => {
+         if (!_target) return console.warn('target is not defined and ref does not used on an element');
+         const el = getTargetElement(_target);
+         if (!el) {
+            return;
          }
-      });
 
-      console.log({ inView }); // true or false
- * @param
- * @returns {inView: boolean}
- */
-const useInViewport = ({
-   target,
-   options = { root: null, rootMargin: `0%`, threshold: 0 },
-   callback,
-   freezeOnceVisible = false
-}: InviewPortType) => {
-   const [observerState, setObserverState] = useState<IntersectionObserver>();
-   const [inView, setinView] = useState<boolean>(false);
-
-   const _funCallback: IntersectionObserverCallback = (
-      entries: IntersectionObserverEntry[],
-      observer: IntersectionObserver
-   ) => {
-      entries.map((entry: IntersectionObserverEntry) => {
-         if (entry.isIntersecting) {
-            setinView(true);
-            callback();
-            //  ---- IF TRUE WE WILL UNOBSERVER AND FALSE IS NO
-            if (freezeOnceVisible) {
-               observer.unobserve(entry.target);
+         const observer = new IntersectionObserver(
+            (entries) => {
+               for (const entry of entries) {
+                  setRatio(entry.intersectionRatio);
+                  setState(entry.isIntersecting);
+               }
+            },
+            {
+               ...options,
+               root: getTargetElement(options?.root)
             }
-         } else {
-            setinView(false);
-         }
-         return true;
-      });
-   };
+         );
 
-   React.useEffect(() => {
-      if (!window) return;
-      if (typeof window.IntersectionObserver === 'undefined') {
-         console.error('window.IntersectionObserver === undefined! => Your Browser is Notsupport');
-         return;
-      }
-      const observer = new IntersectionObserver(_funCallback, options);
-      setObserverState(observer);
-   }, []);
+         observer.observe(el);
 
-   React.useEffect(() => {
-      if (!observerState || !target) return;
-      target && observerState.observe(target);
-   }, [target, observerState]);
+         return () => {
+            observer.disconnect();
+         };
+      },
+      [options?.rootMargin, options?.threshold],
+      _target
+   );
 
-   return inView;
-};
+   return { state, ratio, ref: componentRef };
+}
 
 export { useInViewport };
