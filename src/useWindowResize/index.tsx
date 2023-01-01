@@ -1,21 +1,21 @@
-// https://github.com/sandiiarov/use-events/blob/master/src/useWindowResize/index.tsx
-import React from 'react'
+import { useEffect, useState } from 'react';
+import { useMemoizedFn } from '../useMemoizedFn';
+import { useWindowEvent } from '../useWindowEvent';
 
-function useWindowResize(): [number, number] {
-  const [width, setWidth] = React.useState(window.innerWidth)
-  const [height, setHeight] = React.useState(window.innerHeight)
+function useWindowResize(): { height: number; width: number } {
+   const [dimensions, setDimensions] = useState<{ height: number; width: number }>({ width: 0, height: 0 });
 
-  const resize = React.useCallback(() => {
-    setWidth(window.innerWidth)
-    setHeight(window.innerHeight)
-  }, [])
+   const resize = useMemoizedFn(() => {
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+   });
+   useEffect(() => {
+      if (!window) return;
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+   }, []);
 
-  React.useEffect(() => {
-    window.addEventListener('resize', resize)
-    return () => void window.removeEventListener('resize', resize)
-  }, [resize])
+   useWindowEvent('resize', resize);
 
-  return [width, height]
+   return { ...dimensions };
 }
 
-export default useWindowResize
+export default useWindowResize;
