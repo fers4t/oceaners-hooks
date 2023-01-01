@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useMemoizedFn } from '../useMemoizedFn';
 
 type EventType = keyof WindowEventMap;
 type EventHandler<T extends EventType> = (event: WindowEventMap[T]) => void;
@@ -15,14 +16,13 @@ function useWindowEvent<T extends EventType>(
       savedHandler.current = handler;
    }, [handler]);
 
-   useEffect(() => {
-      // Create the event listener
-      const eventListener = (event: WindowEventMap[T]) => {
-         if (savedHandler.current) {
-            savedHandler.current(event);
-         }
-      };
+   const eventListener = useMemoizedFn((event: WindowEventMap[T]) => {
+      if (savedHandler.current) {
+         savedHandler.current(event);
+      }
+   });
 
+   useEffect(() => {
       // Add the event listener to the window
       window.addEventListener(eventType, eventListener, advancedOptions);
 
