@@ -1,12 +1,23 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 
-/**
- * When triggered, the component will be re-rendered.
- */
 const useUpdateComponent = () => {
+   const isMounted = useRef(false);
    const [, setState] = useState({});
 
-   return useCallback(() => setState({}), []);
+   const update = useCallback(() => {
+      if (isMounted.current) {
+         setState({});
+      }
+   }, []);
+
+   useEffect(() => {
+      isMounted.current = true;
+      return () => {
+         isMounted.current = false;
+      };
+   }, []);
+
+   return update;
 };
 
 export { useUpdateComponent };
