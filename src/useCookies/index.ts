@@ -8,7 +8,8 @@ type Cookie = {
 const useCookies = (): [
    Cookie,
    (key: string, value: string, options?: { expires?: Date }) => void,
-   (key: string) => void
+   (key: string) => void,
+   (key: string) => string | undefined
 ] => {
    const [cookies, setCookies] = useState<Cookie>(() => {
       if (!isBrowser) return;
@@ -68,7 +69,9 @@ const useCookies = (): [
       };
    }, []);
 
-   return [cookies, setCookie, deleteCookie];
+   const getCookie = useCallback((key: string) => cookies[key], [cookies]);
+
+   return [cookies, setCookie, deleteCookie, getCookie];
 };
 
 export default useCookies;
