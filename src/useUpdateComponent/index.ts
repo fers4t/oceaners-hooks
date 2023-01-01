@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 
 /**
- *
  * When triggered, the component will be re-rendered.
  */
 const useUpdateComponent = () => {
