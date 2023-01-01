@@ -15,7 +15,6 @@ export { useEvent } from './useEvent';
 export { useEventListener } from './useEventListener';
 export { default as useFocus } from './useFocus';
 // export { useFullScreen } from './useFullScreen';
-export { default as useGlobalEvent } from './useGlobalEvent';
 export { useHotkey } from './useHotkey';
 export { default as useHover } from './useHover';
 export { useInViewport } from './useInViewport';

@@ -1,38 +1,48 @@
-import { RefObject, useEffect } from 'react';
-import { safeHasOwnProperty } from '../misc';
-import createHandlerSetter from '../misc/createHandlerSetter';
+import { Ref, useEffect, useRef } from 'react';
+import { isBrowser } from '../misc';
+import { useMemoizedFn } from '../useMemoizedFn';
 
-const useEvent = <TEvent extends Event, TElement extends HTMLElement = HTMLElement>(
-   ref: RefObject<TElement>,
-   eventName: string,
-   options?: AddEventListenerOptions
-) => {
-   const [handler, setHandler] = createHandlerSetter<TEvent>();
+type EventHandler = (event: Event) => void;
 
-   if (!!ref && !safeHasOwnProperty(ref, 'current')) {
-      throw new Error('Unable to assign any scroll event to the given ref');
-   }
+interface Options {
+   capture?: boolean;
+   once?: boolean;
+   passive?: boolean;
+}
+
+function useEvent(
+   eventType: keyof HTMLElementEventMap,
+   handler: EventHandler,
+   element: Ref<Element> | HTMLElement | null = null,
+   options: Options = {}
+) {
+   const savedHandler = useRef<EventHandler>();
 
    useEffect(() => {
-      // @ts-ignore // TODO: fix type
-      const cb: EventListenerOrEventListenerObject = (event: TEvent) => {
-         if (handler.current) {
-            handler.current(event);
-         }
-      };
+      savedHandler.current = handler;
+   }, [handler]);
 
-      if (ref.current && ref.current.addEventListener && handler.current) {
-         ref.current.addEventListener(eventName, cb, options);
+   // Create the event listener.
+   const eventListener = useMemoizedFn((event: Event) => savedHandler.current?.(event));
+
+   useEffect(() => {
+      if (!isBrowser) return;
+      // Get the target element to attach the event listener to.
+      let targetElement = (element || window) as HTMLElement;
+      if (element && typeof element === 'object' && 'current' in element) {
+         // `element` is a ref object, so get its current property to get the actual element
+         targetElement = element.current as HTMLElement;
       }
+      if (!targetElement) return;
 
+      // Add the event listener.
+      targetElement.addEventListener(eventType, eventListener, options);
+
+      // Remove the event listener on cleanup.
       return () => {
-         if (ref.current && ref.current.addEventListener && handler.current) {
-            ref.current.removeEventListener(eventName, cb, options);
-         }
+         targetElement.removeEventListener(eventType, eventListener, options);
       };
-   }, [eventName, ref.current, options]);
-
-   return setHandler;
-};
+   }, [eventType, element, options]);
+}
 
 export { useEvent };
