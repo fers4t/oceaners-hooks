@@ -1,6 +1,7 @@
 export * from './misc/index';
 export { default as useActive } from './useActive';
 export { default as useArray } from './useArray';
+export { useAsyncFn } from './useAsyncFn';
 export { default as useBattery } from './useBattery';
 export { default as useBoolean } from './useBoolean';
 export { useChangeTimes } from './useChangeTimes';
