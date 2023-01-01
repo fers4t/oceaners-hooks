@@ -7,6 +7,7 @@ export { default as useBoolean } from './useBoolean';
 export { useChangeTimes } from './useChangeTimes';
 export { useClickOutside } from './useClickOutside';
 export { default as useClientOS } from './useClientOS';
+export { default as useCookies } from './useCookies';
 export { default as useDebounce } from './useDebounce';
 export { useDebounceFn } from './useDebounceFn';
 export { default as useDeepCompareEffect } from './useDeepCompareEffect';
@@ -54,7 +55,10 @@ export { useUpdateComponent } from './useUpdateComponent';
 export { default as useValidatedState } from './useValidatedState';
 export { default as useValueHistory } from './useValueHistory';
 export { default as useVibrate } from './useVibrate';
-export { default as useWhyDidYouUpdate, withWhyDidYouUpdate } from './useWhyDidYouUpdate';
+export {
+   default as useWhyDidYouUpdate,
+   withWhyDidYouUpdate
+} from './useWhyDidYouUpdate';
 export { default as useWillUnmount } from './useWillUnmount';
 export { useWindowEvent } from './useWindowEvent';
 export { default as useWindowResize } from './useWindowResize';

@@ -2,6 +2,8 @@ import useDeepCompareEffect from '../useDeepCompareEffect';
 import { useMemoizedFn } from '../useMemoizedFn';
 import { useSafeState } from '../useSafeState';
 
+// TODO: add refreshInterval,idle, focus, cache mode etc.
+
 function useAsyncFn(asyncFn, dependencies = []) {
    const [state, setState] = useSafeState({
       isLoading: true,
