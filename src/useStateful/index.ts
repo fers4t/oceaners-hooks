@@ -1,6 +1,6 @@
 import { default as React, SetStateAction, useMemo, useState } from 'react';
 
-type UseStateful<T = any> = {
+export type UseStateful<T = any> = {
    setValue: React.Dispatch<SetStateAction<T>>;
    value: T;
 };

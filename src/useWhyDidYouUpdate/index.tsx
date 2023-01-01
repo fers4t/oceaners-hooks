@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export type IProps = Record<string, any>;
 
@@ -32,3 +32,13 @@ export default function useWhyDidYouUpdate(componentName: string, props: IProps)
       prevProps.current = props;
    });
 }
+
+export const withWhyDidYouUpdate = <P extends IProps>(WrappedComponent: React.ComponentType<P>) => {
+   const EnhancedComponent: React.FC<P> = (props) => {
+      useWhyDidYouUpdate('EnhancedComponent', props);
+
+      return <WrappedComponent {...props} />;
+   };
+
+   return React.memo(EnhancedComponent, (prevProps: P, nextProps: P) => Object.is(prevProps, nextProps));
+};
