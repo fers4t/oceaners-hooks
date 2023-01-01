@@ -1,23 +1,23 @@
-import useGlobalEvent from '../useGlobalEvent';
+import { useState, useEffect } from 'react';
+import { isBrowser } from '../misc';
+import { useMemoizedFn } from '../useMemoizedFn';
+import { useWindowEvent } from '../useWindowEvent';
 
-/**
- * Returns a function that accepts a callback to be performed when the window scrolls.
- * @example
- * const WindowScrollReporter = () => {
-  const [scrollY, setScrollY] = useState(window.scrollY);
-  const onWindowScroll = useWindowScroll();
+function useWindowScroll(): { x: number; y: number } {
+   const [scrollPosition, setScrollPosition] = useState<{ x: number; y: number }>();
 
-  onWindowScroll(useThrottledCallback((event) => {
-    setScrollY(window.scrollY);
-  }));
+   const scroll = useMemoizedFn(() => {
+      setScrollPosition({ x: window.scrollX, y: window.scrollY });
+   });
 
-  return (
-    <DisplayDemo>
-      <p>window y-scroll: {scrollY}</p>
-    </DisplayDemo>
-  );
-};
- */
-const useWindowScroll = () => useGlobalEvent<UIEvent>('scroll');
+   useWindowEvent('scroll', scroll);
+
+   useEffect(() => {
+      if (!isBrowser) return;
+      setScrollPosition({ x: window.scrollX, y: window.scrollY });
+   }, []);
+
+   return { ...scrollPosition };
+}
 
 export default useWindowScroll;

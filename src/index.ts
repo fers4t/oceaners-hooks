@@ -57,4 +57,3 @@ export { default as useWillUnmount } from './useWillUnmount';
 export { useWindowEvent } from './useWindowEvent';
 export { default as useWindowResize } from './useWindowResize';
 export { default as useWindowScroll } from './useWindowScroll';
-export { default as useWindowScrollPosition } from './useWindowScrollPosition';
