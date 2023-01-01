@@ -31,7 +31,6 @@ export { useMount } from './useMount';
 export { useNetwork } from './useNetwork';
 export { default as useNumber } from './useNumber';
 export { default as useObjectState } from './useObjectState';
-export { default as usePageLoaded } from './usePageLoaded';
 export { usePrevious } from './usePrevious';
 export { useRenderTimes } from './useRenderTimes';
 export * from './useSafeEffect';
