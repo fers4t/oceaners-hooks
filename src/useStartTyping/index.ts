@@ -1,5 +1,4 @@
-import { off, on } from '../misc/event';
-import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
+import { useEffect, useRef } from 'react';
 
 const isFocusedElementEditable = () => {
    const { activeElement, body } = document;
@@ -44,14 +43,22 @@ const isTypedCharGood = ({ keyCode, metaKey, ctrlKey, altKey }: KeyboardEvent) =
  * @example useStartTyping(() => alert('Started typing...'));
  */
 const useStartTyping = (onStartTyping: (event: KeyboardEvent) => void) => {
-   useIsomorphicLayoutEffect(() => {
+   const savedHandler = useRef<(event: KeyboardEvent) => void>();
+
+   // Remember the latest callback.
+   useEffect(() => {
+      savedHandler.current = onStartTyping;
+   }, [onStartTyping]);
+
+   // Set up the event listener.
+   useEffect(() => {
       const keydown = (event) => {
-         !isFocusedElementEditable() && isTypedCharGood(event) && onStartTyping(event);
+         !isFocusedElementEditable() && isTypedCharGood(event) && savedHandler.current(event);
       };
 
-      on(document, 'keydown', keydown);
+      document.addEventListener('keydown', keydown);
       return () => {
-         off(document, 'keydown', keydown);
+         document.removeEventListener('keydown', keydown);
       };
    }, []);
 };
