@@ -1,5 +1,6 @@
 // https://github.com/sandiiarov/use-events/blob/master/src/useHover/index.tsx
 import React from 'react';
+import { useSafeState } from '../useSafeState';
 
 /**
  * @example const [isHovered, bind] = useHover();
@@ -12,12 +13,12 @@ function useHover(): [
       onMouseLeave: (e: React.MouseEvent) => void;
    }
 ] {
-   const [isHovered, setHovered] = React.useState(false);
+   const [isHovered, setHovered] = useSafeState(false);
 
    const bind = React.useMemo(
       () => ({
-         onMouseEnter: () => void setHovered(true),
-         onMouseLeave: () => void setHovered(false)
+         onMouseEnter: () => setHovered(true),
+         onMouseLeave: () => setHovered(false)
       }),
       []
    );
