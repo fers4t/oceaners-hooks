@@ -33,7 +33,7 @@ export { default as useNumber } from './useNumber';
 export { default as useObjectState } from './useObjectState';
 export { usePrevious } from './usePrevious';
 export { useRenderTimes } from './useRenderTimes';
-export * from './useSafeEffect';
+export { default as useSafeEffect } from './useSafeEffect';
 export { useSafeState } from './useSafeState';
 export { useScrollLock } from './useScrollLock';
 export { default as useSetState } from './useSetState';

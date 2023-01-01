@@ -8,6 +8,9 @@
       "module": "es2015",
       "moduleResolution": "node",
       "noImplicitAny": false,
+      "importHelpers": true,
+      "pretty": true,
+
       // "noUnusedLocals": false,
       "noUnusedParameters": false,
       "outDir": "./dist/esm",
