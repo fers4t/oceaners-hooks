@@ -1,16 +1,36 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-export function useWindowEvent<K extends string>(
-   type: K,
-   listener: K extends keyof WindowEventMap
-      ? (this: Window, ev: WindowEventMap[K]) => void
-      : (this: Window, ev: CustomEvent) => void,
-   options?: boolean | AddEventListenerOptions
-) {
+type EventType = keyof WindowEventMap;
+type EventHandler<T extends EventType> = (event: WindowEventMap[T]) => void;
+
+function useWindowEvent<T extends EventType>(
+   eventType: T,
+   handler: EventHandler<T>,
+   advancedOptions?: boolean | AddEventListenerOptions
+): void {
+   const savedHandler = useRef<EventHandler<T>>();
+
+   // Update the event handler ref if the handler prop changes
    useEffect(() => {
-      if (!window) return;
-      //@ts-ignore
-      window.addEventListener(type, listener, options); //@ts-ignore
-      return () => window.removeEventListener(type, listener, options);
-   }, [type, listener]);
+      savedHandler.current = handler;
+   }, [handler]);
+
+   useEffect(() => {
+      // Create the event listener
+      const eventListener = (event: WindowEventMap[T]) => {
+         if (savedHandler.current) {
+            savedHandler.current(event);
+         }
+      };
+
+      // Add the event listener to the window
+      window.addEventListener(eventType, eventListener, advancedOptions);
+
+      // Remove the event listener from the window when the component unmounts
+      return () => {
+         window.removeEventListener(eventType, eventListener, advancedOptions);
+      };
+   }, [eventType, advancedOptions]);
 }
+
+export { useWindowEvent };
