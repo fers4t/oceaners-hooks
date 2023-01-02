@@ -24,6 +24,7 @@ export { useInViewport } from './useInViewport';
 export { default as useIsMounted } from './useIsMounted';
 export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 export { useLatest } from './useLatest';
+export { useLocalStorage } from './useLocalStorage';
 export { useLockFn } from './useLockFn';
 export { default as useMap } from './useMap';
 export { useMeasure } from './useMeasure';
