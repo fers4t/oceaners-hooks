@@ -6,7 +6,12 @@ module.exports = {
       amd: true,
       node: true
    },
-   extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended'],
+   extends: [
+      'eslint:recommended',
+      'plugin:react/recommended',
+      'plugin:@typescript-eslint/recommended',
+      'plugin:react-hooks/recommended'
+   ],
    parser: '@typescript-eslint/parser',
    parserOptions: {
       ecmaFeatures: {
@@ -15,7 +20,12 @@ module.exports = {
       ecmaVersion: 'latest',
       sourceType: 'module'
    },
-   plugins: ['react', '@typescript-eslint', 'typescript-sort-keys', 'unused-imports'],
+   plugins: [
+      'react',
+      '@typescript-eslint',
+      'typescript-sort-keys',
+      'unused-imports'
+   ],
    rules: {
       'typescript-sort-keys/interface': 'error',
       'typescript-sort-keys/string-enum': 'error',
