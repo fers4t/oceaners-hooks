@@ -26,10 +26,18 @@ const useDeviceOrientation = () => {
       if (!isBrowser) return;
       // get the initial orientation
       onOrientationChangeEvent();
-      window.addEventListener('orientationchange', onOrientationChangeEvent, true);
+      window.addEventListener(
+         'orientationchange',
+         onOrientationChangeEvent,
+         true
+      );
 
       return () => {
-         window.addEventListener('orientationchange', onOrientationChangeEvent, true);
+         window.addEventListener(
+            'orientationchange',
+            onOrientationChangeEvent,
+            true
+         );
       };
    }, []);
 

@@ -1,15 +1,15 @@
 import { useState, useLayoutEffect } from 'react';
 
-export type UseMeasureRect<T> = Pick<
+export type UseMeasureRect = Pick<
    DOMRectReadOnly,
    'x' | 'y' | 'top' | 'left' | 'right' | 'bottom' | 'height' | 'width'
 >;
 export type UseMeasureRef<T> = (elementOrRef: T) => void;
-export type UseMeasureResult<T> = [UseMeasureRef<T>, UseMeasureRect<T>];
+export type UseMeasureResult<T> = [UseMeasureRef<T>, UseMeasureRect];
 
 function useMeasure<T>(): UseMeasureResult<T> {
    const [elementOrRef, setElementOrRef] = useState<T>(null!);
-   const [rect, setRect] = useState<UseMeasureRect<T>>({
+   const [rect, setRect] = useState<UseMeasureRect>({
       x: 0,
       y: 0,
       width: 0,
@@ -24,7 +24,8 @@ function useMeasure<T>(): UseMeasureResult<T> {
       if (!elementOrRef) return;
       const observer = new ResizeObserver((entries) => {
          if (entries[0]) {
-            const { x, y, width, height, top, left, bottom, right } = entries[0].contentRect;
+            const { x, y, width, height, top, left, bottom, right } =
+               entries[0].contentRect;
             setRect({ x, y, width, height, top, left, bottom, right });
          }
       });

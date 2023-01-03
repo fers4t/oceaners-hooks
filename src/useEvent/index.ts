@@ -23,7 +23,9 @@ function useEvent(
    }, [handler]);
 
    // Create the event listener.
-   const eventListener = useMemoizedFn((event: Event) => savedHandler.current?.(event));
+   const eventListener = useMemoizedFn((event: Event) =>
+      savedHandler.current?.(event)
+   );
 
    useEffect(() => {
       if (!isBrowser) return;
