@@ -40,6 +40,7 @@ export { useRenderTimes } from './useRenderTimes';
 export { default as useSafeEffect } from './useSafeEffect';
 export { useSafeState } from './useSafeState';
 export { useScrollLock } from './useScrollLock';
+export { default as useSelect } from './useSelect';
 export { default as useSetState } from './useSetState';
 export { default as useSlider } from './useSlider';
 export { default as useStartTyping } from './useStartTyping';
