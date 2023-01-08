@@ -17,6 +17,7 @@ export { useEvent } from './useEvent';
 export { useEventListener } from './useEventListener';
 export { default as useFocus } from './useFocus';
 export { useFullScreen } from './useFullScreen';
+export { usePagination } from './usePagination';
 export { useHotkey } from './useHotkey';
 export { default as useHover } from './useHover';
 export { default as useIdle } from './useIdle';
