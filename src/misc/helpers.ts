@@ -34,3 +34,48 @@ export function mockApiRequest(delay = 1000, shouldSucceed = true) {
       }, delay);
    });
 }
+
+export const moneyFormatter = new Intl.NumberFormat('tr-TR', {
+   style: 'currency',
+   currency: 'TRY'
+});
+
+/**
+ *
+ * @param num1 smaller number
+ * @param num2 bigger number
+ * @returns
+ */
+export function percentage(num1, num2) {
+   const percent = (num1 / num2) * 100;
+   const roundedPercent = Math.round(percent);
+   return `${roundedPercent}%`;
+}
+
+export const getUTCDate = (date: Date) => {
+   return new Date(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+      date.getUTCHours(),
+      date.getUTCMinutes(),
+      date.getUTCSeconds(),
+      date.getUTCMilliseconds()
+   );
+};
+
+export function getAllClassNames() {
+   const allClasses: string[] = [];
+
+   const allElements = document.querySelectorAll('*');
+
+   for (let i = 0; i < allElements.length; i++) {
+      const classes = allElements[i].className.toString().split(/\s+/);
+      for (let j = 0; j < classes.length; j++) {
+         const cls = classes[j];
+         if (cls && allClasses.indexOf(cls) === -1) allClasses.push(cls);
+      }
+   }
+
+   return allClasses;
+}
