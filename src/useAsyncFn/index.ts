@@ -1,5 +1,5 @@
+import { useCallback } from 'react';
 import useDeepCompareEffect from '../useDeepCompareEffect';
-import { useMemoizedFn } from '../useMemoizedFn';
 import { useSafeState } from '../useSafeState';
 
 // TODO: add refreshInterval,idle, focus, cache mode etc.
@@ -11,7 +11,7 @@ function useAsyncFn(asyncFn, dependencies = []) {
       data: null
    });
 
-   const run = useMemoizedFn(() => {
+   const run = useCallback(() => {
       setState({ isLoading: true, error: null, data: null });
       asyncFn()
          .then((data) => {
@@ -20,7 +20,7 @@ function useAsyncFn(asyncFn, dependencies = []) {
          .catch((error) => {
             setState({ isLoading: false, error, data: null });
          });
-   });
+   }, dependencies);
 
    useDeepCompareEffect(() => {
       run();
