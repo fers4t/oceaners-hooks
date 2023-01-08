@@ -9,13 +9,13 @@
       "dist"
    ],
    "main": "dist/cjs/index.js",
-   "module": "dist/esm/index.js",
+   "module": "dist/bundle.js",
    "repository": {
       "type": "git",
       "url": ""
    },
    "scripts": {
-      "build": "rm -rf ./dist && pnpm run build:esm && pnpm run build:cjs",
+      "build": "rm -rf ./dist && pnpm run build:esm && pnpm run build:cjs && rollup -c",
       "build:esm": "tsc",
       "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
       "dev": "concurrently \"pnpm build\" \"pnpm storybook\"",
@@ -34,6 +34,8 @@
    "devDependencies": {
       "@commitlint/cli": "17.3.0",
       "@commitlint/config-conventional": "17.3.0",
+      "@rollup/plugin-commonjs": "^24.0.0",
+      "@rollup/plugin-typescript": "^11.0.0",
       "@ryansonshine/commitizen": "4.2.8",
       "@ryansonshine/cz-conventional-changelog": "3.3.4",
       "@types/jest": "29.2.3",
@@ -79,6 +81,7 @@
       "lodash.throttle": "^4.1.1",
       "react-uuid": "^2.0.0",
       "release-it": "^15.5.1",
+      "rollup": "^3.9.1",
       "tslib": "^2.4.1"
    },
    "config": {
