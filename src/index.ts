@@ -1,4 +1,3 @@
-export * from './misc/index';
 export { default as useActive } from './useActive';
 export { default as useArray } from './useArray';
 export { useAsyncFn } from './useAsyncFn';
@@ -67,3 +66,6 @@ export { useWindowEvent } from './useWindowEvent';
 export { default as useWindowResize } from './useWindowResize';
 export { default as useWindowScroll } from './useWindowScroll';
 export { default as useWindowScrollTo } from './useWindowScrollTo';
+
+export * from './misc/index';
+export * from './functions/index';

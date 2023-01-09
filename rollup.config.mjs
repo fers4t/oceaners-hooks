@@ -7,5 +7,13 @@ export default {
       file: 'dist/bundle.js',
       format: 'cjs'
    },
+   external: [
+      'react',
+      'lodash/isEqual',
+      'lodash/debounce',
+      'lodash.throttle',
+      'react/jsx-runtime',
+      'crypto'
+   ],
    plugins: [typescript(), commonjs()]
 };
