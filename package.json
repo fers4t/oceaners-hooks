@@ -22,6 +22,7 @@
       "watch": "concurrently \"pnpm watch:esm\" \"pnpm watch:cjs\"",
       "watch:esm": "tsc --watch",
       "watch:cjs": "tsc --module CommonJS --outDir dist/cjs --watch",
+      "watch:rollup": "rollup -c -w",
       "commit": "cz",
       "storybook": "start-storybook -p 6006 --quiet",
       "build-storybook": "build-storybook",
