@@ -68,4 +68,4 @@ export { default as useWindowScroll } from './useWindowScroll';
 export { default as useWindowScrollTo } from './useWindowScrollTo';
 
 export * from './misc/index';
-export * from './functions/index';
+// export * from './functions/index';
